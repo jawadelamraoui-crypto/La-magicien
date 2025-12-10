@@ -1,77 +1,33 @@
 #include <stdio.h>
-#include <stdbool.h>
 
-// Fonction pour trouver et afficher la date de naissance
-void trouver_date_naissance() {
-    int code_final;
-    int jour = -1;
-    int mois = -1;
-    bool trouve = false;
+int main(void) {
+    int a, b, c;
+    int x, y;
 
-    printf("--- Tour de Magie Mathematique (C) ---\n");
+    printf("Entrer a : ");
+    scanf("%d", &a);
 
-    // 1. Demander à l'utilisateur d'entrer le code final
-    printf("Veuillez entrer le nombre final obtenu : ");
-    
-    // Vérification simple de l'entrée
-    if (scanf("%d", &code_final) != 1 || code_final <= 0) {
-        printf("\nErreur: Veuillez entrer un nombre entier positif valide.\n");
-        return;
-    }
+    printf("Entrer b : ");
+    scanf("%d", &b);
 
-    // 2. Définir les noms des mois pour l'affichage final
-    const char *noms_mois[] = {
-        "Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", 
-        "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Decembre"
-    };
+    printf("Entrer c : ");
+    scanf("%d", &c);
 
-    // 3. Boucles de force brute pour trouver Jour (J) et Mois (M)
-    // On sait que: code_final = (J * 31) + (M * 12)
+    printf("\nLes solutions de %d*x + %d*y = %d  sont :\n\n", a, b, c);
 
-    // J de 1 à 31
-    for (int j = 1; j <= 31; j++) {
-        // M de 1 à 12
-        for (int m = 1; m <= 12; m++) {
-            
-            // Calculer l'hypothèse
-            int resultat_hypothese = (j * 31) + (m * 12);
+    int trouve = 0;
 
-            // Vérifier si l'hypothèse correspond au code entré
-            if (resultat_hypothese == code_final) {
-                jour = j;
-                mois = m;
-                trouve = true;
-                // On arrête les deux boucles
-                goto fin_boucles; 
+    for (x = 0; x <= 31; x++) {
+        for (y = 0; y <= 12; y++) {
+            if (a * x + b * y == c) {
+                printf("x = %d , y = %d\n", x, y);
+                trouve = 1;
             }
         }
     }
 
-// Étiquette pour sortir des deux boucles (alternative à l'utilisation d'une variable 'trouve')
-fin_boucles:
+    if (!trouve) 
+        printf("Aucune solution trouvee dans l'intervalle.\n");
 
-    // 4. Afficher le résultat
-    if (trouve) {
-        // Le mois est l'indice m, mais l'array commence à 0, donc on utilise (mois - 1)
-        const char *nom_mois = noms_mois[mois - 1]; 
-
-        printf("\n*** Resultat Dechiffre ***\n");
-        printf("Le nombre final entre etait : %d\n", code_final);
-        printf("La date de naissance est :\n");
-        printf("**Jour :** %d\n", jour);
-        printf("**Mois :** %d (%s)\n", mois, nom_mois);
-        printf("**Donc, vous etes ne le :** **%d %s**\n", jour, nom_mois);
-        printf("---\n");
-
-    } else {
-        printf("\n*** Echec du dechiffrage ***\n");
-        printf("Aucune date de naissance valide n'a pu etre trouvee pour le code : %d\n", code_final);
-        printf("Veuillez verifier le nombre entre.\n");
-    }
-}
-
-// Fonction principale
-int main() {
-    trouver_date_naissance();
     return 0;
 }
